@@ -88,7 +88,7 @@ while run:
                     print("rock")
                 elif scissors.collidepoint(event.pos):
                     print("scissors")
-                elif light_mode.collidepoint(event.pos):
+                elif light_mode.collidepoint(event.pos) and modestr == "light":
                     modestr = "dark"
                 elif dark_mode.collidepoint(event.pos):
                     modestr = "light"
