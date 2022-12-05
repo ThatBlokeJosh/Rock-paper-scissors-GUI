@@ -22,15 +22,16 @@ rock = rock_image.get_rect(center=(0 + gap, height//2 - image_height//2))
 scissors_image = image = pygame.transform.scale(pygame.image.load(
     os.path.join('gui/Assets', 'scissors_image.png')), (image_width, image_height)).convert_alpha()
 scissors = scissors_image.get_rect(center=(width - gap, height//2 - image_height//2))
+mode_width, mode_height = 100, 100
 dark_mode_image = pygame.transform.scale(pygame.image.load(
-    os.path.join('gui/Assets', 'moon.png')), (image_width, image_height)).convert_alpha()
+    os.path.join('gui/Assets', 'moon.png')), (mode_width, mode_height)).convert_alpha()
 light_mode_image = pygame.transform.scale(pygame.image.load(
-    os.path.join('gui/Assets', 'sun.png')), (image_width, image_height)).convert_alpha()
-dark_mode = dark_mode_image.get_rect(center=(width - image_width, height - image_height))
-light_mode = light_mode_image.get_rect(center=(width - image_width, height - image_height))
+    os.path.join('gui/Assets', 'sun.png')), (mode_width, mode_height)).convert_alpha()
+dark_mode = dark_mode_image.get_rect(center=(width - mode_width//1.5, height - mode_height))
+light_mode = light_mode_image.get_rect(center=(width - mode_width//1.5, height - mode_height))
 
-white = (255,255,255)
-dark = (33,33,33)
+white = (228,229,241)
+dark = (37,39,60)
 black = (0,0,0)
 
 pygame.display.set_icon(icon)
@@ -54,7 +55,7 @@ def draw():
     win.blit(rock_image,rock)
     win.blit(scissors_image, scissors)
     f1_size = 150
-    f1 = Font(None, black, f1_size, "GAME",(width//2 - f1_size, 0))
+    f1 = Font(None, black, f1_size, "",(width//2 - f1_size, 0))
     f1.render()
     pygame.display.update()
 
@@ -68,7 +69,7 @@ def mode(modestr):
     draw()
 
 clock = pygame.time.Clock()
-modestr = "light"
+modestr = "dark"
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
