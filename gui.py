@@ -2,7 +2,7 @@ import pygame
 from sys import exit
 pygame.font.init()
 from game import game, returncomputer
-from image import icon, paper, rock, scissors, dark_mode_f, light_mode_f, versus, versus_light
+from image import *
 list = []
 with open("./conf.txt", "r") as f:
     content = f.read()
@@ -15,7 +15,6 @@ win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("")
 image_width, image_height = 200, 200
 gap = 500
-#paper_image = pygame.transform.rotate(paper_image, 90)
 paper_image = paper(image_width, image_height)
 paperx = width//2
 paper = paper_image.get_rect(center=(paperx, height//2 - image_height//2))
@@ -28,6 +27,12 @@ scissors = scissors_image.get_rect(center=(width - gap, height//2 - image_height
 
 versus_image = versus(image_width, image_height)
 versus_image_light = versus_light(image_width, image_height)
+
+win_i = win_i(image_width, image_height)
+win_light = win_light(image_width, image_height)
+
+lose = lose(image_width, image_height)
+lose_light = lose_light(image_width, image_height)
 
 mode_width, mode_height = 100, 100
 dark_mode_image = dark_mode_f(mode_width, mode_height)
@@ -71,7 +76,7 @@ def mode(modestr):
         win.fill(white)
         win.blit(light_mode_image, light_mode)
 
-def result_screen(choice):
+def choice_screen():
     mode(modestr)
     if choice_ == "rock":
         win.blit(rock_image, rock)
@@ -91,7 +96,36 @@ def result_screen(choice):
     elif computer == "scissors":
         win.blit(scissors_image, scissors)
 
-    
+def result_screen():
+    mode(modestr)
+    if result == "win":
+        if modestr == "dark":
+            win.blit(win_i, rock)
+            win.blit(lose, scissors)
+        else:    
+            win.blit(win_light, rock)
+            win.blit(lose_light, scissors)
+    elif result == "lose":
+        if modestr == "dark":
+            win.blit(lose, rock)
+            win.blit(win_i, scissors)
+        else:    
+            win.blit(lose_light, rock)
+            win.blit(win_light, scissors)
+    else:
+        if choice_ == "rock":
+            win.blit(rock_image, rock)
+        elif choice_ == "paper":
+            win.blit(paper_image, rock)
+        elif choice_ == "scissors":
+            win.blit(scissors_image, rock)
+        computer = returncomputer()
+        if computer == "rock":
+            win.blit(rock_image, scissors)
+        elif computer == "paper":
+            win.blit(paper_image, scissors)
+        elif computer == "scissors":
+            win.blit(scissors_image, scissors)
 
 clock = pygame.time.Clock()
 modestr = "dark"
@@ -117,35 +151,43 @@ while run:
                 if paper.collidepoint(event.pos):
                     result = game("paper")
                     choice_ = "paper"
-                    screen = "result"
+                    screen = "choice"
                 elif rock.collidepoint(event.pos):
                     result = game("rock")
                     choice_ = "rock"
-                    screen = "result"
+                    screen = "choice"
                 elif scissors.collidepoint(event.pos):
                     result = game("scissors")
                     choice_ = "scissors"
-                    screen = "result"
+                    screen = "choice"
                 elif light_mode.collidepoint(event.pos) and modestr == "light":
                     modestr = "dark"
                 elif dark_mode.collidepoint(event.pos):
                     modestr = "light"
-        if event.type == timer_event and screen == "result":
-            print(result)
+        if event.type == timer_event and screen == "choice":
+            if result == "win":
+                wins += 1
+            elif result == "lose":
+                losses += 1
+            screen = "result"
+            pygame.time.set_timer(timer_event, 0)
+        elif event.type == timer_event and screen == "result":
             if result == "win":
                 wins += 1
             elif result == "lose":
                 losses += 1
             screen = "main"
-            result = ""
             pygame.time.set_timer(timer_event, 0)
 
         if screen == "main":            
                 mode(modestr)
                 draw()
-        elif screen == "result":
-            result_screen(result)
+        elif screen == "choice":
+            choice_screen()
             pygame.time.set_timer(timer_event, 1000)
+        elif screen == "result":
+            result_screen()
+            pygame.time.set_timer(timer_event, 1000)  
 
     clock.tick(60)
     pygame.display.update()

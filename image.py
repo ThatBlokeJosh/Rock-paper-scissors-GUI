@@ -46,3 +46,23 @@ def versus_light(image_width, image_height):
     versus_image = pygame.transform.scale(pygame.image.load(
     os.path.join('Assets', 'vslight.png')), (image_width, image_height)).convert_alpha()
     return versus_image
+# WIN
+def win_i(image_width, image_height):
+    win_image = pygame.transform.scale(pygame.image.load(
+    os.path.join('Assets', 'win.png')), (image_width, image_height)).convert_alpha()
+    return win_image
+# WIN LIGHT
+def win_light(image_width, image_height):
+    win_image = pygame.transform.scale(pygame.image.load(
+    os.path.join('Assets', 'winlight.png')), (image_width, image_height)).convert_alpha()
+    return win_image
+# LOSE
+def lose(image_width, image_height):
+    lose_image = pygame.transform.scale(pygame.image.load(
+    os.path.join('Assets', 'lose.png')), (image_width, image_height)).convert_alpha()
+    return lose_image
+# LOSE LIGHT
+def lose_light(image_width, image_height):
+    lose_image = pygame.transform.scale(pygame.image.load(
+    os.path.join('Assets', 'loselight.png')), (image_width, image_height)).convert_alpha()
+    return lose_image
