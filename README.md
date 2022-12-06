@@ -7,6 +7,7 @@ Features:
   Functional buttons :)
   Screen with the two picks user/computer
   Adjustable screen size
+  
 Requirements:
   Pygame library and Python installed
   All files in one folder
