@@ -3,7 +3,13 @@ from sys import exit
 pygame.font.init()
 from game import game, returncomputer
 from image import icon, paper, rock, scissors, dark_mode_f, light_mode_f, versus, versus_light
-width, height = 1920, 1080
+list = []
+with open("./conf.txt", "r") as f:
+    content = f.read()
+    for i in content.splitlines():
+        list.append(i)
+
+width, height = int(list[0]), int(list[1])
 
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("")
