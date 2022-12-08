@@ -66,3 +66,43 @@ def lose_light(image_width, image_height):
     lose_image = pygame.transform.scale(pygame.image.load(
     os.path.join('Assets', 'loselight.png')), (image_width, image_height)).convert_alpha()
     return lose_image
+# PLAY
+def play(image_width, image_height):
+    play_image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', 'play.png')), (image_width, image_height)).convert_alpha()
+    return play_image
+# QUIT
+def quit(image_width, image_height):
+    quit_image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', 'quit.png')), (image_width, image_height)).convert_alpha()
+    return quit_image
+# OPTIONS
+def options(image_width, image_height):
+    options_image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', 'options.png')), (image_width, image_height)).convert_alpha()
+    return options_image
+# BACK
+def back(image_width, image_height):
+    image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', 'back.png')), (image_width, image_height)).convert_alpha()
+    return image
+# BACK LIGHT
+def back_light(image_width, image_height):
+    image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', 'backlight.png')), (image_width, image_height)).convert_alpha()
+    return image
+# 1080p
+def p1080(image_width, image_height):
+    image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', '1080.png')), (image_width, image_height)).convert_alpha()
+    return image
+# 720p
+def p720(image_width, image_height):
+    image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', '720.png')), (image_width, image_height)).convert_alpha()
+    return image
+# 1440p
+def p1440(image_width, image_height):
+    image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', '1440.png')), (image_width, image_height)).convert_alpha()
+    return image
