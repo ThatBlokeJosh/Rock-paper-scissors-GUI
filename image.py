@@ -106,3 +106,13 @@ def p1440(image_width, image_height):
     image = pygame.transform.scale(pygame.image.load(
         os.path.join('Assets', '1440.png')), (image_width, image_height)).convert_alpha()
     return image
+# VICTORY
+def victory(image_width, image_height):
+    image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', 'victory.png')), (image_width, image_height)).convert_alpha()
+    return image
+# LOSS
+def loss(image_width, image_height):
+    image = pygame.transform.scale(pygame.image.load(
+        os.path.join('Assets', 'losing.png')), (image_width, image_height)).convert_alpha()
+    return image

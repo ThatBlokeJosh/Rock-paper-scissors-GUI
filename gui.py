@@ -4,6 +4,7 @@ pygame.font.init()
 from game import game, returncomputer
 from image import *
 list = []
+removed = ["choice", "win", "lose", "result"]
 with open("./conf.txt", "r") as f:
     content = f.read()
     for i in content.splitlines():
@@ -54,6 +55,9 @@ image1080 = p1080(image_width, image_height)
 image720 = p720(image_width, image_height)
 image1440 = p1440(image_width, image_height)
 
+victory_image = victory(image_width, image_height)
+loss_image = loss(image_width, image_height)
+
 white = (228,229,241)
 dark = (37,39,60)
 black = (0,0,0)
@@ -85,13 +89,14 @@ def draw():
 def mode(modestr):
     if modestr == "dark":
         win.fill(dark)
-        win.blit(dark_mode_image, dark_mode)
-        if screen != "menu":
+        if screen != "menu" and screen not in removed:
+            win.blit(dark_mode_image, dark_mode)
             win.blit(back_image, back_rect)
     elif modestr == "light":
         win.fill(white)
         win.blit(light_mode_image, light_mode)
-        if screen != "menu":
+        if screen != "menu" and screen not in removed:
+            win.blit(dark_mode_image, dark_mode)
             win.blit(back_light_image, back_rect)
 
 def choice_screen():
@@ -113,6 +118,13 @@ def choice_screen():
         win.blit(paper_image, scissors)
     elif computer == "scissors":
         win.blit(scissors_image, scissors)
+
+def victory():
+    mode(modestr)
+    win.blit(victory_image, paper)
+def loss():
+    mode(modestr)
+    win.blit(loss_image, paper)
 
 def result_screen():
     mode(modestr)
@@ -176,7 +188,7 @@ while run:
                 run = False
                 pygame.quit()
                 exit()
-        if screen != "choice" and screen != "result":
+        if screen not in removed:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if screen == "main":
                     if paper.collidepoint(event.pos):
@@ -191,6 +203,10 @@ while run:
                         result = game("scissors")
                         choice_ = "scissors"
                         screen = "choice"
+                    if result == "win":
+                            wins += 1
+                    elif result == "lose":
+                        losses += 1
 
                 elif screen == "menu":
                     if paper.collidepoint(event.pos):
@@ -206,10 +222,19 @@ while run:
                         with open("conf.txt", "w") as f:
                             if rock.collidepoint(event.pos):
                                 f.write("2560\n1440")
+                                run = False
+                                pygame.quit()
+                                exit()
                             elif paper.collidepoint(event.pos):
                                 f.write("1920\n1080")
+                                run = False
+                                pygame.quit()
+                                exit()
                             elif scissors.collidepoint(event.pos):
                                 f.write("1280\n720")
+                                run = False
+                                pygame.quit()
+                                exit()
                 if light_mode.collidepoint(event.pos) and modestr == "light":
                         modestr = "dark"
                 elif dark_mode.collidepoint(event.pos):
@@ -218,18 +243,24 @@ while run:
                     screen = "menu"
 
         if event.type == timer_event and screen == "choice":
-            if result == "win":
-                wins += 1
-            elif result == "lose":
-                losses += 1
             screen = "result"
             pygame.time.set_timer(timer_event, 0)
         elif event.type == timer_event and screen == "result":
-            if result == "win":
-                wins += 1
-            elif result == "lose":
-                losses += 1
             screen = "main"
+            pygame.time.set_timer(timer_event, 0)
+            if wins == 2:
+                wins = 0
+                losses = 0
+                screen = "win"
+            elif losses == 2:
+                wins = 0
+                losses = 0
+                screen = "lose"
+        elif event.type == timer_event and screen == "win":
+            screen = "menu"
+            pygame.time.set_timer(timer_event, 0)
+        elif event.type == timer_event and screen == "lose":
+            screen = "menu"
             pygame.time.set_timer(timer_event, 0)
 
         if screen == "menu":
@@ -245,6 +276,12 @@ while run:
             pygame.time.set_timer(timer_event, 1000)  
         elif screen == "options":
             options_screen()
+        elif screen == "win":
+            pygame.time.set_timer(timer_event, 1000)  
+            victory()
+        elif screen == "lose":
+            pygame.time.set_timer(timer_event, 1000)
+            loss()
 
     clock.tick(60)
     pygame.display.update()
